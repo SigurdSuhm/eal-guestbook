@@ -1,0 +1,46 @@
+﻿<Window x:Class="MagtenBoelleGuestBook.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="550">
+    <Grid>
+        <TabControl TabStripPlacement="Top" Margin="0, 0, 0, 0">
+            <TabItem Name="tabIitemGuestbook" Header="Guestbook">
+                <StackPanel HorizontalAlignment="Left">
+                    <TextBox Height="220" Margin="15" Text="Write your message here.." FontSize="15" Width="510" />
+                    <Button Content="Send message" Margin="0,0,20,0" IsDefault="True" Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" FontSize="16" FontWeight="Bold" FontFamily="News Gothic" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="tabItemRating" Header="Rating">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Width="350">
+                        <TextBox Height="220" Margin="15,15,0,15" Text="Write your message here.." FontSize="15" HorizontalAlignment="Left" Width="325" />
+                        <Button Content="Send message and rating" HorizontalAlignment="Right" Margin="0,0,25,0" IsDefault="True" Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" FontSize="16" FontWeight="Bold" FontFamily="News Gothic"/>
+                    </StackPanel>
+                    <GridSplitter Grid.Column="1" ResizeDirection="Columns" Width="3" HorizontalAlignment="Stretch" Margin="0,30,10,30" Opacity="0.3" Height="220" VerticalAlignment="Top">
+                        <GridSplitter.Template>
+                            <ControlTemplate TargetType="{x:Type GridSplitter}">
+                                <Grid>
+                                    <Button Content="..." />
+                                    <Rectangle Fill="CadetBlue" />
+                                </Grid>
+                            </ControlTemplate>
+                        </GridSplitter.Template>
+                    </GridSplitter>
+                    <Border BorderBrush="CadetBlue" BorderThickness="1" Height="258" VerticalAlignment="Top" Margin="0,15,0,0" Padding="0">
+                    <StackPanel Margin="0">
+                            <TextBlock Text="Rating" TextDecorations="Underline" Margin="0,0,0,10" FontSize="18" FontFamily="Gautami" HorizontalAlignment="Center" FontWeight="Bold"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image HorizontalAlignment="Left" Height="25" Margin="5,0" VerticalAlignment="Top" Width="25" Source="Images/star.png"/>
+                            <Image HorizontalAlignment="Left" Height="25" Margin="0,0,5,0" VerticalAlignment="Top" Width="25" Source="Images/star.png"/>
+                            <Image HorizontalAlignment="Left" Height="25" Margin="0,0,5,0" VerticalAlignment="Top" Width="25" Source="Images/star.png"/>
+                            <Image HorizontalAlignment="Left" Height="25" Margin="0,0,5,0" VerticalAlignment="Top" Width="25" Source="Images/star.png" Opacity="0.2"/>
+                            <Image HorizontalAlignment="Left" Height="25" Margin="0,0,5,0" VerticalAlignment="Top" Width="25" Source="Images/star.png" Opacity="0.2"/>
+                        </StackPanel>                        
+                    </StackPanel>
+                    </Border>
+                </StackPanel>
+                    
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
