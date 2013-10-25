@@ -1,16 +1,28 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper,11pt]{report}
 
 % Packages
 \usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+
+\renewcommand{\figurename}{Figur}
+\renewcommand{\chaptername}{Kapitel}
+\renewcommand{\contentsname}{Indhold}
 
 \begin{document}
 
 \title{Digital Gæstebog}
+\author{Mikkel Caira, Tobias Madsen, Mikkel Munk, Sigurd Suhm}
 \maketitle
 
+\tableofcontents
+
+\chapter{Business Case}
 \input{./problemstilling}
 \input{./loesning}
 \input{./alternativer}
 \input{./konklusion}
+\chapter{Analyse \& Design}
+\input{./objekt-model}
+\input{./brugergraenseflade}
 
 \end{document}
