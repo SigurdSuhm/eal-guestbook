@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Guestbook>
+  <Entry>
+    <ID>12</ID>
+    <Name>Keld</Name>
+    <Text>Det her sted er nice!</Text>
+    <Rating>4</Rating>
+  </Entry>
+  <Entry>
+    <ID>13</ID>
+    <Name>Shga</Name>
+    <Text>Det her sted er ikke nice!</Text>
+    <Rating>1</Rating>
+  </Entry>
+</Guestbook>
