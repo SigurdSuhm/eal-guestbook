@@ -1,0 +1,95 @@
+﻿<Window x:Class="Digital_Guestbook.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="375" MinHeight="375" Width="560" MinWidth="560">
+	<Border BorderBrush="#FFCCCCCC" BorderThickness="1">
+		<Border.Background>
+			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+				<GradientStop Color="#FFAAAAAA" Offset="1"/>
+				<GradientStop Color="White" Offset="0.55"/>
+			</LinearGradientBrush>
+		</Border.Background>
+		<Grid>
+			<TabControl Margin="3,5,3,3" HorizontalContentAlignment="Left">
+				<TabItem Header="Skriv Besked" Padding="10,1">
+					<Grid Background="#FFE5E5E5">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="64*"/>
+							<ColumnDefinition Width="25*"/>
+						</Grid.ColumnDefinitions>
+						<StackPanel Margin="5">
+							<StackPanel Orientation="Horizontal">
+								<StackPanel>
+									<Label Content="Navn:" Margin="5,0"/>
+									<TextBox x:Name="writeMessageNameTextBox" Height="26" TextWrapping="Wrap" Text="" Margin="5,0" HorizontalAlignment="Left" Width="200"/>
+								</StackPanel>
+								<StackPanel Margin="10,0,0,0">
+									<Label Content="Bedømmelse:" Margin="5,0"/>
+									<Image Height="26" HorizontalAlignment="Left" Width="140" Source="recourses/rating_stars.png" Margin="5,0,0,0" />
+								</StackPanel>
+							</StackPanel>
+							<Label Content="Besked:" Margin="5,15,5,0"/>
+							<RichTextBox x:Name="writeNewMessageTextBox" Height="150" Margin="5,0" Width="360" HorizontalAlignment="Left" Padding="-1,1,1,1">
+								<FlowDocument>
+									<Paragraph>
+										<Run Text="Din besked skrives her..."/>
+									</Paragraph>
+								</FlowDocument>
+							</RichTextBox>
+							<Button x:Name="sendMessageButton" Content="Send Besked" Margin="5,5,5,0" HorizontalAlignment="Left" Padding="15,1" Click="sendMessageButton_Click"/>
+						</StackPanel>
+						<Grid Grid.Column="1">
+							<Border BorderThickness="1,0,0,0" BorderBrush="#FF909090" HorizontalAlignment="Left" Margin="0,5" />
+							<StackPanel Margin="5,5,0,5">
+								<Grid Margin="0,0,5,10">
+									<Label Content="&#8226;" Padding="5,0"/>
+									<TextBlock TextWrapping="Wrap" Text="Du skal huske at skrive dit navn!" Margin="15,0,0,0" Foreground="#FFE40000" />
+								</Grid>
+								<Grid Margin="0,0,5,10">
+									<Label Content="&#8226;" Padding="5,0"/>
+									<TextBlock TextWrapping="Wrap" Text="Beskeden kan ikke være tom, vær venlig at skrive en besked!" Margin="15,0,0,0" Foreground="#FFE40000"/>
+								</Grid>
+							</StackPanel>
+						</Grid>
+					</Grid>
+				</TabItem>
+				<TabItem Header="Se Beskeder" Padding="10,1">
+                    <ScrollViewer>
+					    <Grid Background="#FFE5E5E5">
+						    <Grid.ColumnDefinitions>
+							    <ColumnDefinition Width="64*"/>
+							    <ColumnDefinition Width="25*"/>
+						    </Grid.ColumnDefinitions>
+						    <StackPanel x:Name="gbContent" Margin="5">
+							    <Border BorderThickness="0,0,0,1" BorderBrush="#FF909090" Margin="5,0,5,5" Padding="0">
+								    <StackPanel Margin="0,5">
+									    <Grid Margin="0,0,0,3">
+										    <StackPanel Orientation="Horizontal" Margin="3,0,3,0">
+											    <Label Content="Karen Jensen" HorizontalAlignment="Left"  VerticalAlignment="Top" Padding="0" FontWeight="Bold" FontStyle="Italic" FontSize="11"/>
+											    <Label Content="skrev Fredag, d. 25. Oktober." HorizontalAlignment="Left"  VerticalAlignment="Top" Padding="0" FontStyle="Italic" Margin="5,0,0,0" FontSize="11"/>
+										    </StackPanel>
+										    <Image Source="recourses/rating_stars.png" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,0,5,0" />
+									    </Grid>
+									    <TextBlock TextWrapping="Wrap" Text="Forårs eventen idag, har været helt fantastisk og jeg kan rigtig godt lide de ting der er blevet lavet her siden mit sidste besøg. Jeg ser frem til de mange kommende events der vil blive holdt her på Magtenbøle farm!" VerticalAlignment="Top" Padding="3,0" Margin="0,0,0,3" FontStyle="Italic"/>
+								    </StackPanel>
+							    </Border>
+							    <Border BorderThickness="0,0,0,1" BorderBrush="#FF909090" Margin="5,0,5,5" Padding="0">
+								    <StackPanel Margin="0,5">
+									    <Grid Margin="0,0,0,3">
+										    <StackPanel Orientation="Horizontal" Margin="3,0,3,0">
+											    <Label Content="Martin Sørensen" HorizontalAlignment="Left"  VerticalAlignment="Top" Padding="0" FontWeight="Bold" FontStyle="Italic" FontSize="11"/>
+											    <Label Content="skrev Torsdag, d. 24. Oktober." HorizontalAlignment="Left"  VerticalAlignment="Top" Padding="0" FontStyle="Italic" Margin="5,0,0,0" FontSize="11"/>
+										    </StackPanel>
+										    <Image Source="recourses/rating_stars.png" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,0,5,0" />
+									    </Grid>
+									    <TextBlock TextWrapping="Wrap" Text="Etiam tincidunt sapien lacus, eu ultrices quam semper vel. Proin eleifend tempus mi, sed adipiscing nisi venenatis ac. Proin mattis, mauris a fringilla elementum, mi metus dapibus lectus, consequat rhoncus elit eros ut sapien. Proin elementum arcu ut odio pretium, quis egestas elit pellentesque." VerticalAlignment="Top" Padding="3,0" Margin="0,0,0,3" FontStyle="Italic"/>
+								    </StackPanel>
+							    </Border>	
+						    </StackPanel>
+					    </Grid>
+                    </ScrollViewer>
+                </TabItem>
+			</TabControl>
+		</Grid>
+	</Border>
+</Window>
