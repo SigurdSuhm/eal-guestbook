@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Digital_Guestbook.Classes;
 
 namespace Digital_Guestbook
 {
@@ -22,42 +21,53 @@ namespace Digital_Guestbook
 	public partial class MainWindow : Window
     {
         #region Fields
-        Guestbook guestBook1;
-        List<Entry> entryList;
-        private static int messageId;
+
+        private Guestbook _currentGuestbook;
+
+        private bool _textCleared;
+
         #endregion
 
         #region Constructors
+
         public MainWindow()
         {
             InitializeComponent();
-            guestBook1 = new Guestbook();
-            entryList = new List<Entry>();
+
+            _textCleared = false;
+
+            _currentGuestbook = new Guestbook();
+            _currentGuestbook.LoadGuestbookFile("Guestbook1.xml");
+            updateEntriesView();
         } 
+
         #endregion
 
         #region Public Methods
-        public static DateTime TimeStampToDateTime(double timestamp)
-        {
-            // Unix timestamp is seconds past epoch
-            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            dtDateTime = dtDateTime.AddSeconds(timestamp).ToLocalTime();
 
-            return dtDateTime;
-        }
+        //public static DateTime TimeStampToDateTime(double timestamp)
+        //{
+        //    // Unix timestamp is seconds past epoch
+        //    System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        //    dtDateTime = dtDateTime.AddSeconds(timestamp).ToLocalTime();
 
-        public static double ConvertToTimestamp(DateTime value)
-        {
-            //create Timespan by subtracting the value provided from
-            //the Unix Epoch
-            TimeSpan span = (value - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime());
+        //    return dtDateTime;
+        //}
 
-            //return the total seconds (which is a UNIX timestamp)
-            return (double)span.TotalSeconds;
-        } 
+        //public static double ConvertToTimestamp(DateTime value)
+        //{
+        //    //create Timespan by subtracting the value provided from
+        //    //the Unix Epoch
+        //    TimeSpan span = (value - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime());
+
+        //    //return the total seconds (which is a UNIX timestamp)
+        //    return (double)span.TotalSeconds;
+        //} 
+
         #endregion
 
         #region Private methods
+
         // Metoden skal returnere en rating alt efter hvor mange stjerner der er valgt
         private int calculateRating()
         {
@@ -71,15 +81,45 @@ namespace Digital_Guestbook
             var textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
             return textRange.Text;
         }
+
+        private void updateEntriesView()
+        {
+            gbContent.Children.Clear();
+
+            foreach (UIElement element in _currentGuestbook.GetGuestbookUIElements())
+            {
+                gbContent.Children.Add(element);
+            }
+        }
+
         #endregion
 
         #region Events
+
         //Click event for 'Send besked'-knappen der tilføjer en ny Entry til listen 'entryList' der er et field
         // i main-klassen.
         private void sendMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            entryList.Add(new Entry(messageId++, getStringFromRichTextBox(writeNewMessageTextBox), writeMessageNameTextBox.Text, calculateRating()));
+            _currentGuestbook.Add(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox), writeMessageNameTextBox.Text, calculateRating()));
+            updateEntriesView();
+
+            _currentGuestbook.SaveGuestbookFile("Guestbook1.xml");
+
+            MessageBox.Show("Din besked er blevet tilføjet.", "Besked tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            writeMessageNameTextBox.Clear();
+            writeNewMessageTextBox.Document.Blocks.Clear();
         }
+
+        private void writeNewMessageTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (!_textCleared)
+            {
+                writeNewMessageTextBox.Document.Blocks.Clear();
+                _textCleared = true;
+            }
+        }
+
         #endregion
     }
 }

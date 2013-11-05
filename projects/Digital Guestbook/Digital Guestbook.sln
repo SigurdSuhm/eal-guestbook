@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Express 2012 for Windows Desktop
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digital Guestbook", "Digital Guestbook\Digital Guestbook.csproj", "{D656EAB3-5C77-4B05-8C84-3E501B616CE2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Administration", "Guestbook Viewer\Administration.csproj", "{B15ECC75-2E09-4A14-A484-0A48CE318A5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		{D656EAB3-5C77-4B05-8C84-3E501B616CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D656EAB3-5C77-4B05-8C84-3E501B616CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D656EAB3-5C77-4B05-8C84-3E501B616CE2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B15ECC75-2E09-4A14-A484-0A48CE318A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B15ECC75-2E09-4A14-A484-0A48CE318A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B15ECC75-2E09-4A14-A484-0A48CE318A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B15ECC75-2E09-4A14-A484-0A48CE318A5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

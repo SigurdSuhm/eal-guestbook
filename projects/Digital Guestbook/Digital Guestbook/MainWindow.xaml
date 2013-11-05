@@ -29,7 +29,7 @@
 								</StackPanel>
 							</StackPanel>
 							<Label Content="Besked:" Margin="5,15,5,0"/>
-							<RichTextBox x:Name="writeNewMessageTextBox" Height="150" Margin="5,0" Width="360" HorizontalAlignment="Left" Padding="-1,1,1,1">
+							<RichTextBox x:Name="writeNewMessageTextBox" Height="150" Margin="5,0" HorizontalAlignment="Stretch" Padding="-1,1,1,1" GotFocus="writeNewMessageTextBox_GotFocus">
 								<FlowDocument>
 									<Paragraph>
 										<Run Text="Din besked skrives her..."/>
@@ -61,7 +61,7 @@
 							    <ColumnDefinition Width="25*"/>
 						    </Grid.ColumnDefinitions>
 						    <StackPanel x:Name="gbContent" Margin="5">
-							    <Border BorderThickness="0,0,0,1" BorderBrush="#FF909090" Margin="5,0,5,5" Padding="0">
+							    <!-- <Border BorderThickness="0,0,0,1" BorderBrush="#FF909090" Margin="5,0,5,5" Padding="0">
 								    <StackPanel Margin="0,5">
 									    <Grid Margin="0,0,0,3">
 										    <StackPanel Orientation="Horizontal" Margin="3,0,3,0">
@@ -84,7 +84,7 @@
 									    </Grid>
 									    <TextBlock TextWrapping="Wrap" Text="Etiam tincidunt sapien lacus, eu ultrices quam semper vel. Proin eleifend tempus mi, sed adipiscing nisi venenatis ac. Proin mattis, mauris a fringilla elementum, mi metus dapibus lectus, consequat rhoncus elit eros ut sapien. Proin elementum arcu ut odio pretium, quis egestas elit pellentesque." VerticalAlignment="Top" Padding="3,0" Margin="0,0,0,3" FontStyle="Italic"/>
 								    </StackPanel>
-							    </Border>	
+							    </Border> -->
 						    </StackPanel>
 					    </Grid>
                     </ScrollViewer>

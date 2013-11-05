@@ -8,57 +8,12 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Digital_Guestbook.Classes
+namespace Digital_Guestbook
 {
-    public class Entry
+    public class ViewMessages
     {
-        #region Fields
-        private int _id;
-        private string _text;
-        private string _name;
-        private int _rating;
-        #endregion
-
-        #region Properties
-        public int Id
+        public static Border MessageBuilder(Entry entry)
         {
-            get { return _id; }
-            private set { _id = value; }
-        }
-
-        public string Text
-        {
-            get { return _text; }
-            private set { _text = value; }
-        }
-
-        public string Name
-        {
-            get { return _name; }
-            private set { _name = value; }
-        }
-
-        public int Rating
-        {
-            get { return _rating; }
-            private set { _rating = value; }
-        } 
-        #endregion
-
-        #region Constructors
-        public Entry(int id, string text, string name, int rating)
-        {
-            Id = id;
-            Name = name;
-            Text = text;
-            Rating = rating;
-        } 
-        #endregion
-
-        #region Private Methods
-        public static Border messageBuilder(string name, double timestamp, string text)
-        {
-
             Border msgBorder = new Border();
             msgBorder.Margin = new Thickness(5, 0, 5, 5);
             msgBorder.BorderThickness = new Thickness(0, 0, 0, 1);
@@ -82,9 +37,9 @@ namespace Digital_Guestbook.Classes
             msgName.Padding = new Thickness(0);
             msgName.VerticalAlignment = VerticalAlignment.Top;
             msgName.HorizontalAlignment = HorizontalAlignment.Left;
-            msgName.Content = name.ToString();
+            msgName.Content = entry.Name;
 
-            String msgInfoString = "skrev d. " + MainWindow.TimeStampToDateTime(timestamp).ToString("M") + ".";
+            String msgInfoString = "skrev d. " + entry.DateTime.ToString("M") + ".";
 
             Label msgInfo = new Label();
             msgInfo.FontSize = 11;
@@ -110,7 +65,7 @@ namespace Digital_Guestbook.Classes
             TextBlock msgText = new TextBlock();
             msgText.FontStyle = FontStyles.Italic;
             msgText.TextWrapping = TextWrapping.Wrap;
-            msgText.Text = text.ToString();
+            msgText.Text = entry.Text;
             msgText.VerticalAlignment = VerticalAlignment.Top;
             msgText.Padding = new Thickness(3, 0, 3, 0);
             msgText.Margin = new Thickness(0, 0, 0, 3);
@@ -128,9 +83,7 @@ namespace Digital_Guestbook.Classes
 
             msgBorder.Child = msgStack;
 
-
             return msgBorder;
         }
-        #endregion
     }
 }
