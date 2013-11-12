@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
+using System.IO;
 
 namespace Digital_Guestbook
 {
@@ -18,7 +19,6 @@ namespace Digital_Guestbook
         public Guestbook()
         {
             _entryList = new List<Entry>();
-
         }
 
         public void Add(Entry entry)
@@ -57,7 +57,12 @@ namespace Digital_Guestbook
         public void LoadGuestbookFile(string fileName)
         {
             XmlDocument fileDocument = new XmlDocument();
-            fileDocument.Load(fileName);
+
+		  if(!File.Exists(fileName)) {
+			  CreateGuestbookFile(fileName);
+		  }
+
+		  fileDocument.Load(fileName);
 
             XmlNode parentNode = fileDocument.DocumentElement;
             XmlNodeList entryNodeList = parentNode.SelectNodes("Entry");
@@ -82,6 +87,17 @@ namespace Digital_Guestbook
                 _entryList.Add(new Entry(id, text, name, rating));
             }
         }
+
+		public void CreateGuestbookFile(string fileName) {
+			
+			using (XmlTextWriter writer = new XmlTextWriter(fileName, Encoding.UTF8)){
+				writer.Formatting = Formatting.Indented;
+				writer.WriteStartDocument();
+				writer.WriteElementString("Guestbook", string.Empty);
+				writer.WriteEndDocument();
+			}
+
+		}
 
         public void SaveGuestbookFile(string path)
         {

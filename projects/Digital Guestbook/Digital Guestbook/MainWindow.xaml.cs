@@ -37,7 +37,7 @@ namespace Digital_Guestbook
             _textCleared = false;
 
             _currentGuestbook = new Guestbook();
-            _currentGuestbook.LoadGuestbookFile("Guestbook1.xml");
+            _currentGuestbook.LoadGuestbookFile("Guestbook.xml");
             updateEntriesView();
         } 
 

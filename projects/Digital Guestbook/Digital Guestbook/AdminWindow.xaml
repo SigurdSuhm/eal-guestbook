@@ -1,8 +1,31 @@
 ﻿<Window x:Class="Guestbook_Viewer.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="Guestbook - Administrator" Height="350" Width="525">
+	<Grid>
+		<Border BorderBrush="#FFCCCCCC" BorderThickness="1">
+			<Border.Background>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#FFAAAAAA" Offset="1"/>
+					<GradientStop Color="White" Offset="0.55"/>
+				</LinearGradientBrush>
+			</Border.Background>
+			<Grid>
+				<Border BorderBrush="#FFB0B0B0" BorderThickness="1" Margin="10" Background="White">
+					<StackPanel Margin="0,0,1,1">
+						<Grid Margin="0,1,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="164*"/>
+								<ColumnDefinition Width="165*"/>
+								<ColumnDefinition Width="164*"/>
+							</Grid.ColumnDefinitions>
+							<TextBlock Text="Navn:" Background="#FFBBBBBB" Grid.Column="0" Margin="1,0,0,0" Padding="5,0" />
+							<TextBlock Text="Email:" Background="#FFBBBBBB" Grid.Column="1" Margin="1,0,0,0" Padding="5,0" />
+							<TextBlock Text="Dato:" Background="#FFBBBBBB" Grid.Column="2" Margin="1,0,0,0" Padding="5,0" />
+						</Grid>
+					</StackPanel>
+				</Border>
+			</Grid>
+		</Border>
+	</Grid>
 </Window>
