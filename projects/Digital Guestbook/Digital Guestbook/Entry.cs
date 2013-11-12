@@ -58,12 +58,13 @@ namespace Digital_Guestbook
 
         #region Constructors
 
-        public Entry(int id, string text, string name, int rating)
+        public Entry(int id, string text, string name, int rating, DateTime dateTime)
         {
             ID = id;
             Name = name;
             Text = text;
             Rating = rating;
+            DateTime = dateTime;
         } 
 
         #endregion

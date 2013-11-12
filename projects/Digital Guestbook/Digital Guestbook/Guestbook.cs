@@ -73,7 +73,7 @@ namespace Digital_Guestbook
                 }
             }
 
-            Entry newEntry = new Entry(newEntryID, entry.Text, entry.Name, entry.Rating);
+            Entry newEntry = new Entry(newEntryID, entry.Text, entry.Name, entry.Rating, entry.DateTime);
             newEntry.DateTime = DateTime.Now;
 
             _entryList.Add(newEntry);
@@ -103,6 +103,7 @@ namespace Digital_Guestbook
 
                     string name = curNode["Name"].InnerText;
                     string text = curNode["Text"].InnerText;
+                    DateTime dateTime = DateTime.Parse(curNode["DateTime"].InnerText);
 
                     int rating;
                     if (!int.TryParse(curNode["Rating"].InnerText, out rating))
@@ -110,7 +111,7 @@ namespace Digital_Guestbook
                         // Error
                     }
 
-                    _entryList.Add(new Entry(id, text, name, rating));
+                    _entryList.Add(new Entry(id, text, name, rating, dateTime));
                 } 
             }
         }
@@ -144,6 +145,7 @@ namespace Digital_Guestbook
                     xmlWriter.WriteElementString("ID", currentEntry.ID.ToString());
                     xmlWriter.WriteElementString("Text", currentEntry.Text);
                     xmlWriter.WriteElementString("Rating", currentEntry.Rating.ToString());
+                    xmlWriter.WriteElementString("DateTime", currentEntry.DateTime.ToString());
 
                     xmlWriter.WriteEndElement();
                 }
