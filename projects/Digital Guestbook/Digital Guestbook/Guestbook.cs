@@ -36,7 +36,7 @@ namespace Digital_Guestbook
 
         public int LastPage
         {
-            get { return (_entryList.Count / ENTRIES_PER_PAGE); }
+            get { return ((_entryList.Count - 1) / ENTRIES_PER_PAGE); }
         }
 
         public Guestbook()

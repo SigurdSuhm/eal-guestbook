@@ -108,6 +108,7 @@ namespace Digital_Guestbook
         private void sendMessageButton_Click(object sender, RoutedEventArgs e)
         {
             _currentGuestbook.Add(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox).Trim(), writeMessageNameTextBox.Text, calculateRating(), DateTime.Now));
+            updatePageButtons();
             updateEntriesView();
 
             _currentGuestbook.SaveGuestbookFile("Guestbook1.xml");
