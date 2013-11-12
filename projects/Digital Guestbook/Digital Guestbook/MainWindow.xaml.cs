@@ -37,7 +37,8 @@ namespace Digital_Guestbook
             _textCleared = false;
 
             _currentGuestbook = new Guestbook();
-            _currentGuestbook.LoadGuestbookFile("Guestbook.xml");
+            _currentGuestbook.LoadGuestbookFile("Guestbook1.xml");
+            updatePageButtons();
             updateEntriesView();
         } 
 
@@ -92,6 +93,12 @@ namespace Digital_Guestbook
             }
         }
 
+        private void updatePageButtons()
+        {
+            btnPrevPage.IsEnabled = (_currentGuestbook.CurrentPage != 0);
+            btnNextPage.IsEnabled = (_currentGuestbook.CurrentPage != _currentGuestbook.LastPage);
+        }
+
         #endregion
 
         #region Events
@@ -100,7 +107,7 @@ namespace Digital_Guestbook
         // i main-klassen.
         private void sendMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            _currentGuestbook.Add(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox), writeMessageNameTextBox.Text, calculateRating()));
+            _currentGuestbook.Add(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox).Trim(), writeMessageNameTextBox.Text, calculateRating()));
             updateEntriesView();
 
             _currentGuestbook.SaveGuestbookFile("Guestbook1.xml");
@@ -118,6 +125,20 @@ namespace Digital_Guestbook
                 writeNewMessageTextBox.Document.Blocks.Clear();
                 _textCleared = true;
             }
+        }
+
+        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            _currentGuestbook.CurrentPage--;
+            updatePageButtons();
+            updateEntriesView();
+        }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            _currentGuestbook.CurrentPage++;
+            updatePageButtons();
+            updateEntriesView();
         }
 
         #endregion

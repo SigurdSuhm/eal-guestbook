@@ -13,12 +13,37 @@ namespace Digital_Guestbook
     public class Guestbook
     {
         private const int MAX_ID = 5000;
+        private const int ENTRIES_PER_PAGE = 5;
 
         private List<Entry> _entryList;
+
+        private int _currentPage;
+
+        public int CurrentPage
+        {
+            get { return _currentPage; }
+            set
+            {
+                // Check for invalid index
+                if (value < 0 || value > (_entryList.Count / ENTRIES_PER_PAGE))
+                {
+                    throw new IndexOutOfRangeException("Bad index for the guestbook page.");
+                }
+
+                _currentPage = value;
+            }
+        }
+
+        public int LastPage
+        {
+            get { return (_entryList.Count / ENTRIES_PER_PAGE); }
+        }
 
         public Guestbook()
         {
             _entryList = new List<Entry>();
+
+            _currentPage = 0;
         }
 
         public void Add(Entry entry)
@@ -56,52 +81,55 @@ namespace Digital_Guestbook
 
         public void LoadGuestbookFile(string fileName)
         {
-            XmlDocument fileDocument = new XmlDocument();
-
-		  if(!File.Exists(fileName)) {
-			  CreateGuestbookFile(fileName);
-		  }
-
-		  fileDocument.Load(fileName);
-
-            XmlNode parentNode = fileDocument.DocumentElement;
-            XmlNodeList entryNodeList = parentNode.SelectNodes("Entry");
-
-            foreach (XmlNode curNode in entryNodeList)
+            if (!File.Exists(fileName))
             {
-                int id;
-                if (!int.TryParse(curNode["ID"].InnerText, out id))
+                createGuestbookFile(fileName);
+            }
+            else
+            {
+                XmlDocument fileDocument = new XmlDocument();
+                fileDocument.Load(fileName);
+
+                XmlNode parentNode = fileDocument.DocumentElement;
+                XmlNodeList entryNodeList = parentNode.SelectNodes("Entry");
+
+                foreach (XmlNode curNode in entryNodeList)
                 {
-                    // Error
-                }
+                    int id;
+                    if (!int.TryParse(curNode["ID"].InnerText, out id))
+                    {
+                        // Error
+                    }
 
-                string name = curNode["Name"].InnerText;
-                string text = curNode["Text"].InnerText;
+                    string name = curNode["Name"].InnerText;
+                    string text = curNode["Text"].InnerText;
 
-                int rating;
-                if (!int.TryParse(curNode["Rating"].InnerText, out rating))
-                {
-                    // Error
-                }
+                    int rating;
+                    if (!int.TryParse(curNode["Rating"].InnerText, out rating))
+                    {
+                        // Error
+                    }
 
-                _entryList.Add(new Entry(id, text, name, rating));
+                    _entryList.Add(new Entry(id, text, name, rating));
+                } 
             }
         }
 
-		public void CreateGuestbookFile(string fileName) {
-			
-			using (XmlTextWriter writer = new XmlTextWriter(fileName, Encoding.UTF8)){
-				writer.Formatting = Formatting.Indented;
-				writer.WriteStartDocument();
-				writer.WriteElementString("Guestbook", string.Empty);
-				writer.WriteEndDocument();
-			}
-
-		}
-
-        public void SaveGuestbookFile(string path)
+        private void createGuestbookFile(string fileName)
         {
-            using (XmlTextWriter xmlWriter = new XmlTextWriter(path, Encoding.UTF8))
+            using (XmlTextWriter writer = new XmlTextWriter(fileName, Encoding.UTF8))
+            {
+                writer.Formatting = Formatting.Indented;
+
+                writer.WriteStartDocument();
+                writer.WriteElementString("Guestbook", string.Empty);
+                writer.WriteEndDocument();
+            }
+        }
+
+        public void SaveGuestbookFile(string fileName)
+        {
+            using (XmlTextWriter xmlWriter = new XmlTextWriter(fileName, Encoding.UTF8))
             {
                 xmlWriter.Formatting = Formatting.Indented;
 
@@ -129,9 +157,12 @@ namespace Digital_Guestbook
         {
             List<UIElement> elementsList = new List<UIElement>();
 
-            foreach (Entry entry in _entryList)
+            for (int i = 0; i < ENTRIES_PER_PAGE; i++)
             {
-                elementsList.Add(ViewMessages.MessageBuilder(entry));
+                if ((i + (ENTRIES_PER_PAGE * _currentPage)) >= _entryList.Count)
+                    break;
+
+                elementsList.Add(ViewMessages.MessageBuilder(_entryList[i + (ENTRIES_PER_PAGE * _currentPage)]));
             }
 
             return elementsList;
