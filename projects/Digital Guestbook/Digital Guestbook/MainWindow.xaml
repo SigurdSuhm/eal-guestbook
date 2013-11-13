@@ -32,9 +32,15 @@
                                     <Label Content="Besked:"/>
                                 </StackPanel>
 								<StackPanel Margin="10,0,0,0">
-									<Label Content="Bedømmelse:" Margin="5,0"/>
-									<Image Height="26" HorizontalAlignment="Left" Width="140" Source="recourses/rating_stars.png" Margin="5,0,0,0" />
-								</StackPanel>
+									<Label Content="Bedømmelse:" Margin="0"/>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <Image x:Name="ratingStarOne" Height="auto" Width="auto" HorizontalAlignment="Left" Source="recourses/rating_star_deactivated.png"/>
+                                        <Image x:Name="ratingStarTwo" Height="auto" Width="auto" HorizontalAlignment="Left" Source="recourses/rating_star_deactivated.png"/>
+                                        <Image x:Name="ratingStarThree" Height="auto" Width="auto" HorizontalAlignment="Left" Source="recourses/rating_star_deactivated.png"/>
+                                        <Image x:Name="ratingStarFour" Height="auto" Width="auto" HorizontalAlignment="Left" Source="recourses/rating_star_deactivated.png"/>
+                                        <Image x:Name="ratingStarFive" Height="auto" Width="auto" HorizontalAlignment="Left" Source="recourses/rating_star_deactivated.png"/>
+                                    </StackPanel>                                    
+                                </StackPanel>
 							</StackPanel>
 							<RichTextBox x:Name="writeNewMessageTextBox" Grid.Row="1" Margin="10" HorizontalAlignment="Stretch" Padding="-1,1,1,1" GotFocus="writeNewMessageTextBox_GotFocus">
 								<FlowDocument>
