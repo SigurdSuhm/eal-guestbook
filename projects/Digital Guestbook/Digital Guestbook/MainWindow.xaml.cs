@@ -14,141 +14,200 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Digital_Guestbook
-{	
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window {
-	   #region Fields
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        #region Fields
 
-	   private Guestbook _currentGuestbook;
+        private Guestbook _currentGuestbook;
 
-	   private bool _textCleared;
+        private bool _textCleared;
+        private int _selectedRating;
 
-	   public AdminWindow adminWindow = new AdminWindow();
+        public AdminWindow adminWindow;
 
-	   #endregion
+        #endregion
 
-	   #region Constructors
+        #region Constructors
 
-	   public MainWindow()
-	   {
-		  InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
 
-		  _textCleared = false;
+            _textCleared = false;
+            _selectedRating = 0;
 
-		  _currentGuestbook = new Guestbook();
-		  _currentGuestbook.LoadGuestbookFile("Guestbook1.xml");
-		  updatePageButtons();
-		  updateEntriesView();
-	   } 
+            _currentGuestbook = new Guestbook();
+            _currentGuestbook.LoadGuestbookFile("Guestbook1.xml");
+            updatePageButtons();
+            updateEntriesView();
+        }
 
-	   #endregion
+        #endregion
 
-	   #region Public Methods
+        #region Private methods
 
-	   //public static DateTime TimeStampToDateTime(double timestamp)
-	   //{
-	   //    // Unix timestamp is seconds past epoch
-	   //    System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-	   //    dtDateTime = dtDateTime.AddSeconds(timestamp).ToLocalTime();
+        // Metoden skal returnere en rating alt efter hvor mange stjerner der er valgt
+        private int calculateRating()
+        {
+            // To do..
+            return 0;
+        }
 
-	   //    return dtDateTime;
-	   //}
+        // Metoden tager alt det content der er i en richtextbox og returnerer det som en string
+        private string getStringFromRichTextBox(RichTextBox rtb)
+        {
+            var textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            return textRange.Text;
+        }
 
-	   //public static double ConvertToTimestamp(DateTime value)
-	   //{
-	   //    //create Timespan by subtracting the value provided from
-	   //    //the Unix Epoch
-	   //    TimeSpan span = (value - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime());
+        private void updateEntriesView()
+        {
+            gbContent.Children.Clear();
 
-	   //    //return the total seconds (which is a UNIX timestamp)
-	   //    return (double)span.TotalSeconds;
-	   //} 
+            foreach (UIElement element in _currentGuestbook.GetGuestbookUIElements())
+            {
+                gbContent.Children.Add(element);
+            }
+        }
 
-	   #endregion
+        private void updatePageButtons()
+        {
+            btnPrevPage.IsEnabled = (_currentGuestbook.CurrentPage != 0);
+            btnNextPage.IsEnabled = (_currentGuestbook.CurrentPage != _currentGuestbook.LastPage);
+        }
 
-	   #region Private methods
+        #endregion
 
-	   // Metoden skal returnere en rating alt efter hvor mange stjerner der er valgt
-	   private int calculateRating()
-	   {
-		  // To do..
-		  return 0;
-	   }
+        #region Events
 
-	   // Metoden tager alt det content der er i en richtextbox og returnerer det som en string
-	   private string getStringFromRichTextBox(RichTextBox rtb)
-	   {
-		  var textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-		  return textRange.Text;
-	   }
+        //Click event for 'Send besked'-knappen der tilføjer en ny Entry til listen 'entryList' der er et field
+        // i main-klassen.
+        private void sendMessageButton_Click(object sender, RoutedEventArgs e)
+        {
+            _currentGuestbook.Add(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox).Trim(), writeMessageNameTextBox.Text, _selectedRating, DateTime.Now));
+            updatePageButtons();
+            updateEntriesView();
 
-	   private void updateEntriesView()
-	   {
-		  gbContent.Children.Clear();
+            _currentGuestbook.SaveGuestbookFile("Guestbook1.xml");
 
-		  foreach (UIElement element in _currentGuestbook.GetGuestbookUIElements())
-		  {
-			 gbContent.Children.Add(element);
-		  }
-	   }
+            MessageBox.Show("Din besked er blevet tilføjet.", "Besked tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
 
-	   private void updatePageButtons()
-	   {
-		  btnPrevPage.IsEnabled = (_currentGuestbook.CurrentPage != 0);
-		  btnNextPage.IsEnabled = (_currentGuestbook.CurrentPage != _currentGuestbook.LastPage);
-	   }
+            writeMessageNameTextBox.Clear();
+            writeNewMessageTextBox.Document.Blocks.Clear();
 
-	   #endregion
+            BitmapImage deactivatedStarSource = new BitmapImage();
+            deactivatedStarSource.BeginInit();
+            deactivatedStarSource.UriSource = new Uri("recourses/rating_star_deactivated.png", UriKind.Relative);
+            deactivatedStarSource.EndInit();
 
-	   #region Events
+            for (int i = 0; i < 5; i++)
+            {
+                Image currentRatingStar = stpRating.Children[i] as Image;
+                currentRatingStar.Source = deactivatedStarSource;
+            }
 
-	   //Click event for 'Send besked'-knappen der tilføjer en ny Entry til listen 'entryList' der er et field
-	   // i main-klassen.
-	   private void sendMessageButton_Click(object sender, RoutedEventArgs e)
-	   {
-		  _currentGuestbook.Add(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox).Trim(), writeMessageNameTextBox.Text, calculateRating(), DateTime.Now));
-		  updatePageButtons();
-		  updateEntriesView();
+            _selectedRating = 0;
+        }
 
-		  _currentGuestbook.SaveGuestbookFile("Guestbook1.xml");
+        private void writeNewMessageTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (!_textCleared)
+            {
+                writeNewMessageTextBox.Document.Blocks.Clear();
+                _textCleared = true;
+            }
+        }
 
-		  MessageBox.Show("Din besked er blevet tilføjet.", "Besked tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
+        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            _currentGuestbook.CurrentPage--;
+            updatePageButtons();
+            updateEntriesView();
+        }
 
-		  writeMessageNameTextBox.Clear();
-		  writeNewMessageTextBox.Document.Blocks.Clear();
-	   }
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            _currentGuestbook.CurrentPage++;
+            updatePageButtons();
+            updateEntriesView();
+        }
 
-	   private void writeNewMessageTextBox_GotFocus(object sender, RoutedEventArgs e)
-	   {
-		  if (!_textCleared)
-		  {
-			 writeNewMessageTextBox.Document.Blocks.Clear();
-			 _textCleared = true;
-		  }
-	   }
+        private void rating_MouseEnter(object sender, MouseEventArgs e)
+        {
+            BitmapImage activeStarSource = new BitmapImage();
+            BitmapImage deactivatedStarSource = new BitmapImage();
 
-	   private void btnPrevPage_Click(object sender, RoutedEventArgs e)
-	   {
-		  _currentGuestbook.CurrentPage--;
-		  updatePageButtons();
-		  updateEntriesView();
-	   }
+            activeStarSource.BeginInit();
+            activeStarSource.UriSource = new Uri("recourses/rating_star_active.png", UriKind.Relative);
+            activeStarSource.EndInit();
 
-	   private void btnNextPage_Click(object sender, RoutedEventArgs e)
-	   {
-		  _currentGuestbook.CurrentPage++;
-		  updatePageButtons();
-		  updateEntriesView();
-	   }
+            deactivatedStarSource.BeginInit();
+            deactivatedStarSource.UriSource = new Uri("recourses/rating_star_deactivated.png", UriKind.Relative);
+            deactivatedStarSource.EndInit();
 
-	   #endregion
+            ImageSource sourceToUse = activeStarSource;
 
-	   private void openAdminWindow(object sender, RoutedEventArgs e) {
-		   // AdminWindow, Showing
-		   adminWindow.Show();
-	   }
+            for (int i = 0; i < 5; i++)
+            {
+                Image currentRatingStar = stpRating.Children[i] as Image;
 
-	}
+                if (currentRatingStar != null)
+                {
+                    currentRatingStar.Source = sourceToUse;
+
+                    if (currentRatingStar == (sender as Image))
+                        sourceToUse = deactivatedStarSource;
+                }
+            }
+        }
+
+        private void rating_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (stpRating.Children[i] == (sender as Image))
+                {
+                    _selectedRating = i + 1;
+                    break;
+                }
+            }
+        }
+
+        private void rating_MouseLeave(object sender, MouseEventArgs e)
+        {
+            BitmapImage activeStarSource = new BitmapImage();
+            BitmapImage deactivatedStarSource = new BitmapImage();
+
+            activeStarSource.BeginInit();
+            activeStarSource.UriSource = new Uri("recourses/rating_star_active.png", UriKind.Relative);
+            activeStarSource.EndInit();
+
+            deactivatedStarSource.BeginInit();
+            deactivatedStarSource.UriSource = new Uri("recourses/rating_star_deactivated.png", UriKind.Relative);
+            deactivatedStarSource.EndInit();
+
+            for (int i = 0; i < 5; i++)
+            {
+                Image currentRatingStar = stpRating.Children[i] as Image;
+
+                if (i < _selectedRating)
+                    currentRatingStar.Source = activeStarSource;
+                else
+                    currentRatingStar.Source = deactivatedStarSource;
+            }
+        }
+
+        #endregion
+
+        private void openAdminWindow(object sender, RoutedEventArgs e)
+        {
+            // AdminWindow, Showing
+            adminWindow = new AdminWindow();
+            adminWindow.ShowDialog();
+        }
+    }
 }

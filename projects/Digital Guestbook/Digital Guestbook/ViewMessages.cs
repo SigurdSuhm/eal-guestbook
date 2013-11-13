@@ -50,17 +50,49 @@ namespace Digital_Guestbook
             msgInfo.HorizontalAlignment = HorizontalAlignment.Left;
             msgInfo.Content = msgInfoString;
 
-            BitmapImage msgRatingBitmap = new BitmapImage();
-            msgRatingBitmap.BeginInit();
-            msgRatingBitmap.UriSource = new Uri("recourses/rating_stars.png", UriKind.Relative);
-            msgRatingBitmap.EndInit();
+            //BitmapImage msgRatingBitmap = new BitmapImage();
+            //msgRatingBitmap.BeginInit();
+            //msgRatingBitmap.UriSource = new Uri("recourses/rating_stars.png", UriKind.Relative);
+            //msgRatingBitmap.EndInit();
 
-            Image msgRatingStars = new Image();
-            msgRatingStars.Source = msgRatingBitmap;
-            msgRatingStars.Width = 75;
-            msgRatingStars.Margin = new Thickness(0, 0, 5, 0);
-            msgRatingStars.HorizontalAlignment = HorizontalAlignment.Right;
-            msgRatingStars.VerticalAlignment = VerticalAlignment.Top;
+            //Image msgRatingStars = new Image();
+            //msgRatingStars.Source = msgRatingBitmap;
+            //msgRatingStars.Width = 75;
+            //msgRatingStars.Margin = new Thickness(0, 0, 5, 0);
+            //msgRatingStars.HorizontalAlignment = HorizontalAlignment.Right;
+            //msgRatingStars.VerticalAlignment = VerticalAlignment.Top;
+
+            StackPanel ratingStack = new StackPanel();
+            ratingStack.Orientation = Orientation.Horizontal;
+            ratingStack.Width = 100;
+            ratingStack.Margin = new Thickness(0, 0, 5, 0);
+            ratingStack.HorizontalAlignment = HorizontalAlignment.Right;
+            ratingStack.VerticalAlignment = VerticalAlignment.Top;
+
+            BitmapImage activeStar = new BitmapImage();
+            activeStar.BeginInit();
+            activeStar.UriSource = new Uri("recourses/rating_star_active.png", UriKind.Relative);
+            activeStar.EndInit();
+
+            BitmapImage deactivatedStar = new BitmapImage();
+            deactivatedStar.BeginInit();
+            deactivatedStar.UriSource = new Uri("recourses/rating_star_deactivated.png", UriKind.Relative);
+            deactivatedStar.EndInit();
+
+            for (int i = 0; i < 5; i++)
+            {
+                Image currentStar = new Image();
+                currentStar.HorizontalAlignment = HorizontalAlignment.Left;
+                currentStar.Width = 20;
+                currentStar.Height = 20;
+
+                if (i < entry.Rating)
+                    currentStar.Source = activeStar;
+                else
+                    currentStar.Source = deactivatedStar;
+
+                ratingStack.Children.Add(currentStar);
+            }
 
             TextBlock msgText = new TextBlock();
             msgText.FontStyle = FontStyles.Italic;
@@ -76,7 +108,7 @@ namespace Digital_Guestbook
             msgTopStack.Children.Add(msgInfo);
 
             msgTopGrid.Children.Add(msgTopStack);
-            msgTopGrid.Children.Add(msgRatingStars);
+            msgTopGrid.Children.Add(ratingStack);
 
             msgStack.Children.Add(msgTopGrid);
             msgStack.Children.Add(msgText);
