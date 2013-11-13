@@ -11,7 +11,7 @@
 		</Border.Background>
 		<Grid>
 			<!-- This button is only a test button -->
-			<Button Content="Admin Button" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="0,3,3,0" Padding="10,1" Click="openAdminWindow" Panel.ZIndex="100" />
+			<Button x:Name="btnAdmin" Content="Admin Button" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" Margin="0,3,3,0" Padding="10,1" Click="btnAdmin_Click" Panel.ZIndex="100" />
 			<TabControl Margin="3,5,3,3" HorizontalContentAlignment="Left">
 				<TabItem Header="Skriv Besked" Padding="10,1">
 					<Grid Background="#FFE5E5E5">
@@ -34,11 +34,11 @@
 								<StackPanel Margin="10,0,0,0">
 									<Label Content="Bedømmelse:" Margin="0"/>
                                     <StackPanel x:Name="stpRating" Orientation="Horizontal" >
-                                        <Image x:Name="ratingStarOne" Height="auto" Width="auto" HorizontalAlignment="Left" Source="recourses/rating_star_deactivated.png" MouseEnter="rating_MouseEnter" MouseLeave="rating_MouseLeave" MouseDown="rating_MouseDown"/>
-                                        <Image x:Name="ratingStarTwo" Height="auto" Width="auto" HorizontalAlignment="Left" Source="recourses/rating_star_deactivated.png" MouseEnter="rating_MouseEnter" MouseLeave="rating_MouseLeave" MouseDown="rating_MouseDown"/>
-                                        <Image x:Name="ratingStarThree" Height="auto" Width="auto" HorizontalAlignment="Left" Source="recourses/rating_star_deactivated.png" MouseEnter="rating_MouseEnter" MouseLeave="rating_MouseLeave" MouseDown="rating_MouseDown"/>
-                                        <Image x:Name="ratingStarFour" Height="auto" Width="auto" HorizontalAlignment="Left" Source="recourses/rating_star_deactivated.png" MouseEnter="rating_MouseEnter" MouseLeave="rating_MouseLeave" MouseDown="rating_MouseDown"/>
-                                        <Image x:Name="ratingStarFive" Height="auto" Width="auto" HorizontalAlignment="Left" Source="recourses/rating_star_deactivated.png" MouseEnter="rating_MouseEnter" MouseLeave="rating_MouseLeave" MouseDown="rating_MouseDown"/>
+                                        <Image x:Name="ratingStarOne" Height="auto" Width="auto" HorizontalAlignment="Left" Source="resources/rating_star_deactivated.png" MouseEnter="rating_MouseEnter" MouseLeave="rating_MouseLeave" MouseDown="rating_MouseDown"/>
+                                        <Image x:Name="ratingStarTwo" Height="auto" Width="auto" HorizontalAlignment="Left" Source="resources/rating_star_deactivated.png" MouseEnter="rating_MouseEnter" MouseLeave="rating_MouseLeave" MouseDown="rating_MouseDown"/>
+                                        <Image x:Name="ratingStarThree" Height="auto" Width="auto" HorizontalAlignment="Left" Source="resources/rating_star_deactivated.png" MouseEnter="rating_MouseEnter" MouseLeave="rating_MouseLeave" MouseDown="rating_MouseDown"/>
+                                        <Image x:Name="ratingStarFour" Height="auto" Width="auto" HorizontalAlignment="Left" Source="resources/rating_star_deactivated.png" MouseEnter="rating_MouseEnter" MouseLeave="rating_MouseLeave" MouseDown="rating_MouseDown"/>
+                                        <Image x:Name="ratingStarFive" Height="auto" Width="auto" HorizontalAlignment="Left" Source="resources/rating_star_deactivated.png" MouseEnter="rating_MouseEnter" MouseLeave="rating_MouseLeave" MouseDown="rating_MouseDown"/>
                                     </StackPanel>                                    
                                 </StackPanel>
 							</StackPanel>
