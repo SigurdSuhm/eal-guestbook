@@ -2,28 +2,49 @@
 
 \section{Aktører}
 
-The following Actors for the system:
-Administrator: That administrates the guestbook entries and can delete entries that is not relevant for the administrator. He will also be able to see the entries in a admin panel. He needs to be able to save and hide entries, if he wants to return to the post but don’t want to show it in the guestbook. 
 
-Guestbook Users: 
-The User will be able to write a review of their stay on the farm in the guestbook, they can also attach their name and a rating. 
+Der er følgende aktører i systemet:
+Administrator: Han har mulighed for at se alle beskeder i gæstebogen, også selvom de er skjulte. Derudover har han mulighed for at administrere gæstebogens forskellige beskeder, ved at slette eller skjulte dem der ikke er relevante for ham og/eller brugerne. 
+Gæstebogs brugere: Brugeren har mulighed for at skrive en lille anmeldelse af deres ophold på gården, ved at indtaste navn, vurdering og en besked, der vil blive gemt og vist i gæstebogen for andre brugere, medmindre administratoren vælger at skjule/slette disse.
 
 \section{Use cases}
+ 
+Brugeren skriver en besked. (Han tilføjer sit navn, en vurdering og en besked)
+Administratoren sletter en besked fra gæstebogen.
+Administratoren skjuler en besked I gæstebogen.
+Administratoren vælger hvilken gæstebog der er aktuelt vist for brugeren.
 
-User writes a message 
-User commits a rating to the entry.
-User commits a name to the entry. 
+Scenarie for bruger:
+Brugeren vil gerne skrive en anmeldelse af sit ophold. De åbner gæstebogs-applikationen, hvor de har mulighed for at indtaste deres navn, vurdering af opholdet, samt et besked.
+Herefter kan de sende beskeden som bliver oprettet og vist i en ny fane under ’Se beskeder’.
+Her har de mulighed for at se deres besked, sammen med beskeder fra andre brugeres tidlige ophold.
+Scenarie for administrator: 
+Administratoren vælger at gå ind i administrator-panelet, hvor han har nogle forskellige muligheder.
+Han kan se beskederne i den aktuelt valgte gæstebog, han kan vælge beskeder ud som han vil skjule eller slette og han har derudover mulighed for at ændre hvilken gæstebog der er aktuelt vist for brugeren.
 
-Scenario User:
-The user wants to write a review of the stay, they open the guestbook application, Where they enter their name, write a message and commit a rating to that entry. Here after they submit it and are able to view the message amongst the other entries written to the guestbook.
+\section{Kontrakter}
+Use-case: Administrator sletter en besked fra gæstebogen
+Operation: Slet den valgte besked (navn, besked: String, id, vurdering: Int, dato: Date)
+Pre: Der er valgt en besked
+Post: Den valgte besked bliver slettet fra gæstebogen
+Output: ”Beskeden er slettet”
+ 
+Use-case: Skriv en besked til gæstebogen
+Operation: Tilføj besked (navn, besked: String, vurdering: Int, dato: Date)
+Pre: Navn, vurdering og besked er udfyldt
+Post: Beskeden er tilføjet
+Output: ”Beskeden er tilføjet”
+Use-case: Administratoren skjuler en besked i gæstebogen
+Operation:  skjul besked(navn, besked: String, vurdering: Int, dato: Date)
+Pre :Beskeden er valgt 
+Post: Beskeden er skjult.
+Output: Beskeden er nu blivet skjult.
 
-Administrator deletes entries:
-
-Administrator hides entries: 
-
-Scenario Admin:
-
-The admin logs in at the admin panel, here after he will come into the active guestbook, here after he will be able to view the entries that is committed in the active guestbook. He can make some different changes to the guestbook entries: He will be able to hide the entries he does not wish to be shown to the users and delete the entries that are irrelevant for the admin and/or the users. 
+Use-case: Administratoren vælger hvilken gæstebog der er aktuelt vist for brugeren
+Operation: ændre gæstebogen(Gæstebog: Guestbook).
+Pre: Den aktuelle gæstebog er valgt
+Post: Gæstenbogen er blevet valgt.
+Output: Du har nu valgt en ny gæstebog
 
 
 
