@@ -1,6 +1,12 @@
 \chapter{Design}
 
 \section{Use case: Skriv besked}
+
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{./add-entry-ssd}
+\caption{Systemsekvensdiagram for AddEntry}
+\label{add-entry-ssd}
+\end{figure}
  
 \begin{figure}[h]
 \caption{Operationskontrakt for AddEntry}
@@ -21,7 +27,7 @@
 \begin{itemize}
 \item[]
 \item[] \textbf{Use-case:} Administratoren skjuler en besked i gæstebogen
-\item[] \textbf{Operation:}  skjul besked(navn, besked: String, vurdering: Int, dato: Date)
+\item[] \textbf{Operation:}  Skjul besked (navn, besked: String, vurdering: Int, dato: Date)
 \item[] \textbf{Pre:} Beskeden er valgt 
 \item[] \textbf{Post:} Beskeden er skjult.
 \item[] \textbf{Output:} Beskeden er nu blivet skjult.
@@ -49,7 +55,7 @@
 \begin{itemize}
 \item[]
 \item[] \textbf{Use-case:} Administratoren vælger hvilken gæstebog der er aktuelt vist for brugeren
-\item[] \textbf{Operation:} ændre gæstebogen(Gæstebog: Guestbook).
+\item[] \textbf{Operation:} Ændre gæstebogen (Gæstebog: Guestbook).
 \item[] \textbf{Pre:} Den aktuelle gæstebog er valgt
 \item[] \textbf{Post:} Gæstenbogen er blevet valgt.
 \item[] \textbf{Output:} Du har nu valgt en ny gæstebog

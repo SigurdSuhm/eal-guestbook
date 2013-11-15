@@ -93,7 +93,7 @@ namespace Digital_Guestbook
         /// Adds an entry to the guestbook.
         /// </summary>
         /// <param name="entry"></param>
-        public void Add(Entry entry)
+        public void AddEntry(Entry entry)
         {
             int newEntryID = entry.ID;
 

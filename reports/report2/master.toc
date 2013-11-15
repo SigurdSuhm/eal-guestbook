@@ -8,10 +8,10 @@
 \contentsline {subsection}{\numberline {3.2.2}Scenarie for administrator}{5}
 \contentsline {section}{\numberline {3.3}Objektmodel}{5}
 \contentsline {section}{\numberline {3.4}Dom\IeC {\ae }nemodel}{5}
-\contentsline {chapter}{\numberline {4}Design}{6}
-\contentsline {section}{\numberline {4.1}Use case: Skriv besked}{6}
-\contentsline {section}{\numberline {4.2}Use case: Skjul besked}{6}
-\contentsline {section}{\numberline {4.3}Use case: Slet besked}{6}
-\contentsline {section}{\numberline {4.4}Use case: Skift g\IeC {\ae }stebog}{6}
-\contentsline {chapter}{\numberline {5}Arbejdsproces}{8}
-\contentsline {chapter}{\numberline {6}Konklusion}{9}
+\contentsline {chapter}{\numberline {4}Design}{7}
+\contentsline {section}{\numberline {4.1}Use case: Skriv besked}{7}
+\contentsline {section}{\numberline {4.2}Use case: Skjul besked}{7}
+\contentsline {section}{\numberline {4.3}Use case: Slet besked}{7}
+\contentsline {section}{\numberline {4.4}Use case: Skift g\IeC {\ae }stebog}{7}
+\contentsline {chapter}{\numberline {5}Arbejdsproces}{10}
+\contentsline {chapter}{\numberline {6}Konklusion}{11}

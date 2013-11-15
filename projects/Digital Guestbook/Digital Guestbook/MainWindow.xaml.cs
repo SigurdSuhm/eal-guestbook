@@ -86,25 +86,8 @@ namespace Digital_Guestbook
             btnNextPage.IsEnabled = (_currentGuestbook.CurrentPage != _currentGuestbook.LastPage);
         }
 
-        #endregion
-
-        #region Events
-
-        /// <summary>
-        /// Click event for the button posting an entry.
-        /// </summary>
-        private void sendMessageButton_Click(object sender, RoutedEventArgs e)
+        private void clearUi()
         {
-            // Add entry to the guestbook
-            _currentGuestbook.Add(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox).Trim(), writeMessageNameTextBox.Text, _selectedRating, DateTime.Now));
-            updatePageButtons();
-            updateEntriesView();
-
-            // Save guestbook file
-            _currentGuestbook.SaveGuestbookFile("Guestbook1.xml");
-
-            MessageBox.Show("Din besked er blevet tilføjet.", "Besked tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
-
             // Clear UI so a new entry can be created
             writeMessageNameTextBox.Clear();
             writeNewMessageTextBox.Document.Blocks.Clear();
@@ -121,6 +104,33 @@ namespace Digital_Guestbook
             }
 
             _selectedRating = 0;
+        }
+
+        private void updateUi()
+        {
+            updatePageButtons();
+            updateEntriesView();
+        }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Click event for the button posting an entry.
+        /// </summary>
+        private void sendMessageButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Add entry to the guestbook
+            _currentGuestbook.AddEntry(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox).Trim(), writeMessageNameTextBox.Text, _selectedRating, DateTime.Now));
+            updateUi();
+
+            // Save guestbook file
+            _currentGuestbook.SaveGuestbookFile("Guestbook1.xml");
+
+            MessageBox.Show("Din besked er blevet tilføjet.", "Besked tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            clearUi();
         }
 
         /// <summary>
