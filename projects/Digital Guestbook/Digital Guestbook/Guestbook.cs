@@ -181,16 +181,7 @@ namespace Digital_Guestbook
                 // Run through all entries in the entry list
                 foreach (Entry currentEntry in _entryList)
                 {
-                    xmlWriter.WriteStartElement("Entry");
-
-                    // Write entry content
-                    xmlWriter.WriteElementString("Name", currentEntry.Name);
-                    xmlWriter.WriteElementString("ID", currentEntry.ID.ToString());
-                    xmlWriter.WriteElementString("Text", currentEntry.Text);
-                    xmlWriter.WriteElementString("Rating", currentEntry.Rating.ToString());
-                    xmlWriter.WriteElementString("DateTime", currentEntry.DateTime.ToString());
-
-                    xmlWriter.WriteEndElement();
+                    writeEntryContent(xmlWriter, currentEntry);
                 }
 
                 xmlWriter.WriteEndElement();
@@ -235,6 +226,20 @@ namespace Digital_Guestbook
                 writer.WriteElementString("Guestbook", string.Empty);
                 writer.WriteEndDocument();
             }
+        }
+
+        private void writeEntryContent(XmlTextWriter xmlWriter, Entry currentEntry)
+        {
+            xmlWriter.WriteStartElement("Entry");
+
+            // Write entry content
+            xmlWriter.WriteElementString("Name", currentEntry.Name);
+            xmlWriter.WriteElementString("ID", currentEntry.ID.ToString());
+            xmlWriter.WriteElementString("Text", currentEntry.Text);
+            xmlWriter.WriteElementString("Rating", currentEntry.Rating.ToString());
+            xmlWriter.WriteElementString("DateTime", currentEntry.DateTime.ToString());
+
+            xmlWriter.WriteEndElement();
         }
 
         #endregion
