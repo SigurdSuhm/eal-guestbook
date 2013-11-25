@@ -43,7 +43,7 @@ namespace Digital_Guestbook
             _selectedRating = 0;
 
             // Load guestbook from Xml
-            _currentGuestbook = new Guestbook();
+            _currentGuestbook = new Guestbook("Guestbook 1");
             _currentGuestbook.LoadGuestbookFile("Guestbook1.xml");
             updatePageButtons();
             updateEntriesView();
@@ -60,7 +60,7 @@ namespace Digital_Guestbook
         /// <returns>String containing the rich text box contents.</returns>
         private string getStringFromRichTextBox(RichTextBox rtb)
         {
-            var textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            TextRange textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
             return textRange.Text;
         }
 

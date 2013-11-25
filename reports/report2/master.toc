@@ -14,4 +14,4 @@
 \contentsline {section}{\numberline {4.3}Use case: Slet besked}{13}
 \contentsline {section}{\numberline {4.4}Use case: Skift g\IeC {\ae }stebog}{13}
 \contentsline {chapter}{\numberline {5}Arbejdsproces}{15}
-\contentsline {chapter}{\numberline {6}Konklusion}{16}
+\contentsline {chapter}{\numberline {6}Konklusion}{17}

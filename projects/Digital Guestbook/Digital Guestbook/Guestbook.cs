@@ -27,6 +27,9 @@ namespace Digital_Guestbook
 
         #region Fields
 
+        // Name of the guestbook
+        private string name;
+
         // List of guestbook entries
         private List<Entry> _entryList;
 
@@ -36,6 +39,14 @@ namespace Digital_Guestbook
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets the name of the guestbook.
+        /// </summary>
+        public string Name
+        {
+            get { return name; }
+        }
 
         /// <summary>
         /// Gets the entry list of the guestbook.
@@ -78,8 +89,10 @@ namespace Digital_Guestbook
         /// <summary>
         /// Creates a new guestbook.
         /// </summary>
-        public Guestbook()
+        public Guestbook(string name)
         {
+            this.name = name;
+
             _entryList = new List<Entry>();
 
             _currentPage = 0;
