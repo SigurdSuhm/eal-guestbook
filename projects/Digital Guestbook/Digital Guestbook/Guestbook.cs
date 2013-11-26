@@ -148,7 +148,7 @@ namespace Digital_Guestbook
             }
 
             // Post entry to entry list
-            Entry newEntry = new Entry(newEntryID, entry.Text, entry.Name, entry.Rating, entry.DateTime);
+            Entry newEntry = new Entry(newEntryID, entry.Text, entry.Name, entry.Rating, entry.DateTime, entry.IsShown);
             _entryList.Add(newEntry);
         }
 
@@ -181,8 +181,9 @@ namespace Digital_Guestbook
                     string name = curNode["Name"].InnerText;
                     int rating = int.Parse(curNode["Rating"].InnerText);
                     DateTime dateTime = DateTime.Parse(curNode["DateTime"].InnerText);
+                    bool isShown = bool.Parse(curNode["IsShown"].InnerText);
 
-                    _entryList.Add(new Entry(id, text, name, rating, dateTime));
+                    _entryList.Add(new Entry(id, text, name, rating, dateTime, isShown));
                 }
             }
         }
@@ -260,6 +261,7 @@ namespace Digital_Guestbook
             xmlWriter.WriteElementString("Text", currentEntry.Text);
             xmlWriter.WriteElementString("Rating", currentEntry.Rating.ToString());
             xmlWriter.WriteElementString("DateTime", currentEntry.DateTime.ToString());
+            xmlWriter.WriteElementString("IsShown", currentEntry.IsShown.ToString());
 
             xmlWriter.WriteEndElement();
         }

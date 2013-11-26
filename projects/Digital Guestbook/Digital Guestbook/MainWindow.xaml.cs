@@ -136,7 +136,7 @@ namespace Digital_Guestbook
         private void sendMessageButton_Click(object sender, RoutedEventArgs e)
         {
             // Add entry to the guestbook
-            _currentGuestbook.AddEntry(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox).Trim(), writeMessageNameTextBox.Text, _selectedRating, DateTime.Now));
+            _currentGuestbook.AddEntry(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox).Trim(), writeMessageNameTextBox.Text, _selectedRating, DateTime.Now, true));
             updateUi();
 
             // Save guestbook file
@@ -269,6 +269,7 @@ namespace Digital_Guestbook
             // Show the admin window as a dialog
             AdminWindow adminWindow = new AdminWindow(this);
             adminWindow.ShowDialog();
+            updateUi();
         }
 
         #endregion

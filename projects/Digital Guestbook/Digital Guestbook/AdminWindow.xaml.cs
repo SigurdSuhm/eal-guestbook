@@ -74,8 +74,12 @@ namespace Digital_Guestbook
             
             if (ParentWindow.CurrentGuestbook != null)
             {
-                lsvEntries.ItemsSource = selectedGuestbook.EntryList; 
+                lsvEntries.ItemsSource = selectedGuestbook.EntryList;
             }
+
+            skjulBtn.IsEnabled = false;
+            sletBtn.IsEnabled = false;
+            visBtn.IsEnabled = false;
         }
 
         #endregion
@@ -276,12 +280,51 @@ namespace Digital_Guestbook
         private void active_guestbookBtn_Click(object sender, RoutedEventArgs e)
         {
             ParentWindow.CurrentGuestbook = selectedGuestbook;
+            MessageBox.Show(String.Format("Gæstebogen {0} er nu den aktive gæstebog.", selectedGuestbook.Name), "Gæstebog aktiveret",
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void skjulBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (lsvEntries.SelectedItem != null)
+            {
+                (lsvEntries.SelectedItem as Entry).IsShown = !(lsvEntries.SelectedItem as Entry).IsShown;
+                lsvEntries.Items.Refresh();
+
+                selectedGuestbook.SaveGuestbookFile();
+
+                if ((lsvEntries.SelectedItem as Entry).IsShown)
+                    skjulBtn.Content = "Skjul";
+                else
+                    skjulBtn.Content = "Vis";
+            }
         }
 
         private void delete_GuestbookBtn_Click(object sender, RoutedEventArgs e)
         {
             guestbookCollection.Remove(cmbGuestbooks.SelectedItem as GuestbookDescriptor);
             saveGuestbookFile(GUESTBOOK_FILE_NAME);
+        }
+
+        private void lsvEntries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lsvEntries.SelectedItem != null)
+            {
+                if ((lsvEntries.SelectedItem as Entry).IsShown)
+                    skjulBtn.Content = "Skjul";
+                else
+                    skjulBtn.Content = "Vis";
+
+                skjulBtn.IsEnabled = true;
+                sletBtn.IsEnabled = true;
+                visBtn.IsEnabled = true;
+            }
+            else
+            {
+                skjulBtn.IsEnabled = false;
+                sletBtn.IsEnabled = false;
+                visBtn.IsEnabled = false;
+            }
         }
 
         private void visBtn_Click(object sender, RoutedEventArgs e)

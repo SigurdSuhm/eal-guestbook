@@ -34,6 +34,11 @@ namespace Digital_Guestbook
         #region Properties
 
         /// <summary>
+        /// Gets or sets the boolean value determining if the entry is shown.
+        /// </summary>
+        public bool IsShown { get; set; }
+
+        /// <summary>
         /// Gets the ID of the guestbook entry.
         /// </summary>
         public int ID
@@ -85,13 +90,14 @@ namespace Digital_Guestbook
         /// <summary>
         /// Creates a new guestbook entry.
         /// </summary>
-        public Entry(int id, string text, string name, int rating, DateTime dateTime)
+        public Entry(int id, string text, string name, int rating, DateTime dateTime, bool isShown)
         {
             ID = id;
             Name = name;
             Text = text;
             Rating = rating;
             DateTime = dateTime;
+            IsShown = isShown;
         } 
 
         #endregion
@@ -110,6 +116,7 @@ namespace Digital_Guestbook
             border.Margin = new Thickness(5, 0, 5, 5);
             border.BorderThickness = new Thickness(0, 0, 0, 1);
             border.BorderBrush = new SolidColorBrush(Color.FromRgb(90, 90, 90));
+            border.Visibility = entry.IsShown ? Visibility.Visible : Visibility.Collapsed;
 
             // Main stack panel spanding the entire border
             StackPanel mainStackPanel = new StackPanel();

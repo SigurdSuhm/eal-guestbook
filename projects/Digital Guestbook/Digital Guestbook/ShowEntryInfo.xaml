@@ -27,7 +27,7 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Row ="1">
-                <TextBlock Text="{Binding Text}"/>
+                <TextBox Text="{Binding Text, Mode=OneWay}" IsReadOnly="True"/>
             </Grid>
         </Grid>
     </Grid>

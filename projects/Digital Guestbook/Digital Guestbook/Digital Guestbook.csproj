@@ -63,6 +63,7 @@
     <Compile Include="AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BoolToStringConverter.cs" />
     <Compile Include="ShowEntryInfo.xaml.cs">
       <DependentUpon>ShowEntryInfo.xaml</DependentUpon>
     </Compile>
