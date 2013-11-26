@@ -277,5 +277,21 @@ namespace Digital_Guestbook
         {
             ParentWindow.CurrentGuestbook = selectedGuestbook;
         }
+
+        private void delete_GuestbookBtn_Click(object sender, RoutedEventArgs e)
+        {
+            guestbookCollection.Remove(cmbGuestbooks.SelectedItem as GuestbookDescriptor);
+            saveGuestbookFile(GUESTBOOK_FILE_NAME);
+        }
+
+        private void visBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (lsvEntries.SelectedItem != null)
+            {
+                ShowEntryInfo showEntryDialog = new ShowEntryInfo();
+                showEntryDialog.DataContext = (lsvEntries.SelectedItem as Entry);
+                showEntryDialog.ShowDialog();
+            }
+        }
     }
 }
