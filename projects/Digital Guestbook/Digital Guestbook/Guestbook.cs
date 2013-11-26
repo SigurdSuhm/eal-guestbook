@@ -29,6 +29,8 @@ namespace Digital_Guestbook
 
         // Name of the guestbook
         private string name;
+        // Guestbook file name
+        private string fileName;
 
         // List of guestbook entries
         private List<Entry> _entryList;
@@ -46,6 +48,14 @@ namespace Digital_Guestbook
         public string Name
         {
             get { return name; }
+        }
+
+        /// <summary>
+        /// Gets the file name of the guestbook.
+        /// </summary>
+        public string FileName
+        {
+            get { return fileName; }
         }
 
         /// <summary>
@@ -89,9 +99,10 @@ namespace Digital_Guestbook
         /// <summary>
         /// Creates a new guestbook.
         /// </summary>
-        public Guestbook(string name)
+        public Guestbook(string name, string fileName)
         {
             this.name = name;
+            this.fileName = fileName;
 
             _entryList = new List<Entry>();
 
@@ -144,8 +155,7 @@ namespace Digital_Guestbook
         /// <summary>
         /// Loads a guestbook from the specified Xml file.
         /// </summary>
-        /// <param name="fileName">Path to the Xml file.</param>
-        public void LoadGuestbookFile(string fileName)
+        public void LoadGuestbookFile()
         {
             // Check if file exists
             if (!File.Exists(fileName))
@@ -180,8 +190,7 @@ namespace Digital_Guestbook
         /// <summary>
         /// Saves the guestbook to an Xml file at the specified path.
         /// </summary>
-        /// <param name="fileName">Path to the Xml file to save to.</param>
-        public void SaveGuestbookFile(string fileName)
+        public void SaveGuestbookFile()
         {
             using (XmlTextWriter xmlWriter = new XmlTextWriter(fileName, Encoding.UTF8))
             {

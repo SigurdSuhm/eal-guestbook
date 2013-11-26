@@ -30,6 +30,20 @@ namespace Digital_Guestbook
 
         #endregion
 
+        #region Properties
+
+        public Guestbook CurrentGuestbook
+        {
+            get { return _currentGuestbook; }
+            set
+            {
+                _currentGuestbook = value;
+                updateUi();
+            }
+        }
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -43,8 +57,8 @@ namespace Digital_Guestbook
             _selectedRating = 0;
 
             // Load guestbook from Xml
-            _currentGuestbook = new Guestbook("Guestbook 1");
-            _currentGuestbook.LoadGuestbookFile("Guestbook1.xml");
+            _currentGuestbook = new Guestbook("Guestbook 1", "Guestbook1.xml");
+            _currentGuestbook.LoadGuestbookFile();
             updatePageButtons();
             updateEntriesView();
         }
@@ -126,7 +140,7 @@ namespace Digital_Guestbook
             updateUi();
 
             // Save guestbook file
-            _currentGuestbook.SaveGuestbookFile("Guestbook1.xml");
+            _currentGuestbook.SaveGuestbookFile();
 
             MessageBox.Show("Din besked er blevet tilføjet.", "Besked tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -253,7 +267,7 @@ namespace Digital_Guestbook
         private void btnAdmin_Click(object sender, RoutedEventArgs e)
         {
             // Show the admin window as a dialog
-            AdminWindow adminWindow = new AdminWindow(_currentGuestbook);
+            AdminWindow adminWindow = new AdminWindow(this);
             adminWindow.ShowDialog();
         }
 

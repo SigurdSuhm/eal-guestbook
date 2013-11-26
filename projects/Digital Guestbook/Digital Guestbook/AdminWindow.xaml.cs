@@ -39,27 +39,43 @@ namespace Digital_Guestbook
 
         #endregion
 
+        #region Properties
+
+        public MainWindow ParentWindow { get; private set; }
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
         /// Constructor for the admin window.
         /// </summary>
         /// <param name="guestbook"></param>
-        public AdminWindow(Guestbook guestbook)
+        public AdminWindow(MainWindow parent)
         {
             InitializeComponent();
 
-            foreach (Entry entry in guestbook.EntryList)
-            {
-                //admMessageList.Children.Add(postListBuilder(entry));
-            }
-
+            ParentWindow = parent;
+            
             guestbookCollection = new ObservableCollection<GuestbookDescriptor>();
             cmbGuestbooks.ItemsSource = guestbookCollection;
             loadGuestbookFile(GUESTBOOK_FILE_NAME);
 
-            selectedGuestbook = guestbook;
-            lsvEntries.ItemsSource = selectedGuestbook.EntryList;
+            foreach (GuestbookDescriptor gbd in guestbookCollection)
+            {
+                if (gbd.FileName == ParentWindow.CurrentGuestbook.FileName)
+                {
+                    cmbGuestbooks.SelectedItem = gbd;
+                    break;
+                }
+            }
+
+            selectedGuestbook = ParentWindow.CurrentGuestbook; 
+            
+            if (ParentWindow.CurrentGuestbook != null)
+            {
+                lsvEntries.ItemsSource = selectedGuestbook.EntryList; 
+            }
         }
 
         #endregion
@@ -236,18 +252,30 @@ namespace Digital_Guestbook
                 saveGuestbookFile(GUESTBOOK_FILE_NAME);
 
                 cmbGuestbooks.SelectedItem = newGuestbook;
+
+                MessageBoxResult result = MessageBox.Show("Vil du aktivere den nye gæstebog?", "Gæstebog oprettet", MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                    ParentWindow.CurrentGuestbook = selectedGuestbook;
             }
         }
 
         private void cmbGuestbooks_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Guestbook guestbook = new Guestbook((cmbGuestbooks.SelectedItem as GuestbookDescriptor).Name);
-            guestbook.LoadGuestbookFile((cmbGuestbooks.SelectedItem as GuestbookDescriptor).FileName);
+            Guestbook guestbook = new Guestbook((cmbGuestbooks.SelectedItem as GuestbookDescriptor).Name,
+                (cmbGuestbooks.SelectedItem as GuestbookDescriptor).FileName);
+            guestbook.LoadGuestbookFile();
 
             selectedGuestbook = guestbook;
             lsvEntries.ItemsSource = selectedGuestbook.EntryList;
         }
 
         #endregion
+
+        private void active_guestbookBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ParentWindow.CurrentGuestbook = selectedGuestbook;
+        }
     }
 }
