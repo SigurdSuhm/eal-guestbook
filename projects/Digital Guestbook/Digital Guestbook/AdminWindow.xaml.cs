@@ -292,11 +292,6 @@ namespace Digital_Guestbook
 				if(cmbGuestbooks.Items.Count >= 1){
 					cmbGuestbooks.SelectedIndex = 0;
 				}
-				else {
-					if(cmbGuestbooks.Items.Count == 0){
-						
-					}
-				}
 			}
         }
 
@@ -382,5 +377,14 @@ namespace Digital_Guestbook
                 showEntryDialog.ShowDialog();
             }
         }
+
+		private void removeGbEntry(object sender, RoutedEventArgs e) {
+			
+			Entry selectedEntry = (Entry)lsvEntries.SelectedItem;
+				  selectedGuestbook.EntryList.Remove(selectedEntry);
+				  selectedGuestbook.SaveGuestbookFile();
+				  lsvEntries.Items.Refresh();
+
+		}
     }
 }
