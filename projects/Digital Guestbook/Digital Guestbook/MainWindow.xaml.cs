@@ -7,6 +7,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml;
 
 #endregion
 
@@ -57,10 +58,7 @@ namespace Digital_Guestbook
             _selectedRating = 0;
 
             // Load guestbook from Xml
-            _currentGuestbook = new Guestbook("Guestbook 1", "Guestbook1.xml");
-            _currentGuestbook.LoadGuestbookFile();
-            updatePageButtons();
-            updateEntriesView();
+            loadActiveGuestbook();
         }
 
         #endregion
@@ -124,6 +122,27 @@ namespace Digital_Guestbook
         {
             updatePageButtons();
             updateEntriesView();
+        }
+
+        private void loadActiveGuestbook()
+        {
+            XmlDocument guestbookDocument = new XmlDocument();
+            guestbookDocument.Load("Guestbooks.xml");
+
+            foreach (XmlNode guestbookNode in guestbookDocument.DocumentElement.SelectNodes("Guestbook"))
+            {
+                if (bool.Parse(guestbookNode["IsActive"].InnerText))
+                {
+                    _currentGuestbook = new Guestbook(guestbookNode["Name"].InnerText,
+                        guestbookNode["FileName"].InnerText);
+
+                    _currentGuestbook.LoadGuestbookFile();
+
+                    break;
+                }
+            }
+
+            updateUi();
         }
 
         #endregion

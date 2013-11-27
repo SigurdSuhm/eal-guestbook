@@ -56,7 +56,7 @@ namespace Digital_Guestbook
             InitializeComponent();
 
             ParentWindow = parent;
-            
+
             guestbookCollection = new ObservableCollection<GuestbookDescriptor>();
             cmbGuestbooks.ItemsSource = guestbookCollection;
             loadGuestbookFile(GUESTBOOK_FILE_NAME);
@@ -70,18 +70,19 @@ namespace Digital_Guestbook
                 }
             }
 
-			// Sikre at der default gæstebogen altid er i guestbooks filen
-			if(cmbGuestbooks.Items.Count == 0){
-				GuestbookDescriptor newDefaultGb = new GuestbookDescriptor();
-									newDefaultGb.Name = "Standard";
-									newDefaultGb.FileName = "Guestbook1.xml";
-					
-				guestbookCollection.Add(newDefaultGb);
-				saveGuestbookFile(GUESTBOOK_FILE_NAME);
-			}
+            // Sikre at der default gæstebogen altid er i guestbooks filen
+            if (cmbGuestbooks.Items.Count == 0)
+            {
+                GuestbookDescriptor newDefaultGb = new GuestbookDescriptor();
+                newDefaultGb.Name = "Standard";
+                newDefaultGb.FileName = "Guestbook1.xml";
 
-            selectedGuestbook = ParentWindow.CurrentGuestbook; 
-            
+                guestbookCollection.Add(newDefaultGb);
+                saveGuestbookFile(GUESTBOOK_FILE_NAME);
+            }
+
+            selectedGuestbook = ParentWindow.CurrentGuestbook;
+
             if (ParentWindow.CurrentGuestbook != null)
             {
                 lsvEntries.ItemsSource = selectedGuestbook.EntryList;
@@ -142,6 +143,10 @@ namespace Digital_Guestbook
                     writer.WriteElementString("Name", guestbook.Name);
                     writer.WriteElementString("FileName", guestbook.FileName);
 
+                    bool isActive = (guestbook.Name == ParentWindow.CurrentGuestbook.Name);
+
+                    writer.WriteElementString("IsActive", isActive.ToString());
+
                     writer.WriteEndElement();
                 }
 
@@ -150,10 +155,14 @@ namespace Digital_Guestbook
             }
         }
 
-		private void GBActivator(){
-			ParentWindow.CurrentGuestbook = selectedGuestbook;
-		}
+        private void setActiveGuestbook()
+        {
+            ParentWindow.CurrentGuestbook = selectedGuestbook;
 
+            saveGuestbookFile(GUESTBOOK_FILE_NAME);
+        }
+
+        /*
         /// <summary>
         /// Creates the UI element for individual guestbook entries in the admin window.
         /// </summary>
@@ -221,6 +230,7 @@ namespace Digital_Guestbook
 
             return mainGrid;
         }
+        */
 
         #endregion
 
@@ -259,12 +269,10 @@ namespace Digital_Guestbook
                 if (fileName == "Guestbook")
                     throw new Exception("Too many guestbooks have been created");
 
-                
-
-                GuestbookDescriptor newGuestbook = new GuestbookDescriptor() 
-                { 
-                    Name = newGuestbookWindow.GuestbookName, 
-                    FileName = fileName 
+                GuestbookDescriptor newGuestbook = new GuestbookDescriptor()
+                {
+                    Name = newGuestbookWindow.GuestbookName,
+                    FileName = fileName
                 };
                 guestbookCollection.Add(newGuestbook);
                 saveGuestbookFile(GUESTBOOK_FILE_NAME);
@@ -281,25 +289,28 @@ namespace Digital_Guestbook
 
         private void cmbGuestbooks_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-			if(cmbGuestbooks.SelectedItem != null){
-				Guestbook guestbook = new Guestbook((cmbGuestbooks.SelectedItem as GuestbookDescriptor).Name, (cmbGuestbooks.SelectedItem as GuestbookDescriptor).FileName);
-				guestbook.LoadGuestbookFile();
+            if (cmbGuestbooks.SelectedItem != null)
+            {
+                Guestbook guestbook = new Guestbook((cmbGuestbooks.SelectedItem as GuestbookDescriptor).Name, (cmbGuestbooks.SelectedItem as GuestbookDescriptor).FileName);
+                guestbook.LoadGuestbookFile();
 
-				selectedGuestbook = guestbook;
-				lsvEntries.ItemsSource = selectedGuestbook.EntryList;
-			}
-			else {
-				if(cmbGuestbooks.Items.Count >= 1){
-					cmbGuestbooks.SelectedIndex = 0;
-				}
-			}
+                selectedGuestbook = guestbook;
+                lsvEntries.ItemsSource = selectedGuestbook.EntryList;
+            }
+            else
+            {
+                if (cmbGuestbooks.Items.Count >= 1)
+                {
+                    cmbGuestbooks.SelectedIndex = 0;
+                }
+            }
         }
 
         #endregion
 
         private void active_guestbookBtn_Click(object sender, RoutedEventArgs e)
         {
-            GBActivator();
+            setActiveGuestbook();
             MessageBox.Show(String.Format("Gæstebogen {0} er nu den aktive gæstebog.", selectedGuestbook.Name), "Gæstebog aktiveret", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
@@ -322,29 +333,35 @@ namespace Digital_Guestbook
 
         private void delete_GuestbookBtn_Click(object sender, RoutedEventArgs e)
         {
-			GuestbookDescriptor selectedGB = (GuestbookDescriptor)cmbGuestbooks.SelectedItem;
-            guestbookCollection.Remove(selectedGB);
-            saveGuestbookFile(GUESTBOOK_FILE_NAME);
-			if(File.Exists(selectedGB.FileName)) File.Delete(selectedGB.FileName);
+            MessageBoxResult result = MessageBox.Show("Er du sikker på at du vil slette den valgte gæstebog?", "Slet gæstebog", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-			if(cmbGuestbooks.Items.Count == 0){
-				
-				MessageBox.Show("Standard gæstebogen blev tømt!");
+            if (result == MessageBoxResult.Yes)
+            {
+                GuestbookDescriptor selectedGB = (GuestbookDescriptor)cmbGuestbooks.SelectedItem;
+                guestbookCollection.Remove(selectedGB);
+                saveGuestbookFile(GUESTBOOK_FILE_NAME);
 
-				GuestbookDescriptor newGbd = new GuestbookDescriptor();
-									newGbd.Name = "Standard";
-									newGbd.FileName = "Guestbook1.xml";
+                if (File.Exists(selectedGB.FileName))
+                    File.Delete(selectedGB.FileName);
 
-				Guestbook			newGb = new Guestbook(newGbd.Name, newGbd.FileName);
-					
-				guestbookCollection.Add(newGbd);
-				saveGuestbookFile(GUESTBOOK_FILE_NAME);
-				cmbGuestbooks.SelectedIndex = 0;
+                if (cmbGuestbooks.Items.Count == 0)
+                {
+                    MessageBox.Show("Standard gæstebogen blev tømt!");
 
-				selectedGuestbook = newGb;
-				GBActivator();
-			}
+                    GuestbookDescriptor newGbd = new GuestbookDescriptor();
+                    newGbd.Name = "Standard";
+                    newGbd.FileName = "Guestbook1.xml";
 
+                    Guestbook newGb = new Guestbook(newGbd.Name, newGbd.FileName);
+
+                    guestbookCollection.Add(newGbd);
+                    saveGuestbookFile(GUESTBOOK_FILE_NAME);
+                    cmbGuestbooks.SelectedIndex = 0;
+
+                    selectedGuestbook = newGb;
+                    setActiveGuestbook();
+                } 
+            }
         }
 
         private void lsvEntries_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -378,13 +395,12 @@ namespace Digital_Guestbook
             }
         }
 
-		private void removeGbEntry(object sender, RoutedEventArgs e) {
-			
-			Entry selectedEntry = (Entry)lsvEntries.SelectedItem;
-				  selectedGuestbook.EntryList.Remove(selectedEntry);
-				  selectedGuestbook.SaveGuestbookFile();
-				  lsvEntries.Items.Refresh();
-
-		}
+        private void removeGbEntry(object sender, RoutedEventArgs e)
+        {
+            Entry selectedEntry = (Entry)lsvEntries.SelectedItem;
+            selectedGuestbook.EntryList.Remove(selectedEntry);
+            selectedGuestbook.SaveGuestbookFile();
+            lsvEntries.Items.Refresh();
+        }
     }
 }
