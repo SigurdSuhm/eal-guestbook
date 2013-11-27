@@ -328,15 +328,14 @@ namespace Digital_Guestbook
         private void delete_GuestbookBtn_Click(object sender, RoutedEventArgs e)
         {
 			GuestbookDescriptor selectedGB = (GuestbookDescriptor)cmbGuestbooks.SelectedItem;
-			if(selectedGB.FileName == "Gæstebog1") MessageBox.Show("Standard gæstebogen vil kun blive tømt!");
             guestbookCollection.Remove(selectedGB);
             saveGuestbookFile(GUESTBOOK_FILE_NAME);
 			if(File.Exists(selectedGB.FileName)) File.Delete(selectedGB.FileName);
 
 			if(cmbGuestbooks.Items.Count == 0){
 				
-				MessageBox.Show("Der er ikke flere gæstebøger!");
-				
+				MessageBox.Show("Standard gæstebogen blev tømt!");
+
 				GuestbookDescriptor newGbd = new GuestbookDescriptor();
 									newGbd.Name = "Standard";
 									newGbd.FileName = "Guestbook1.xml";
