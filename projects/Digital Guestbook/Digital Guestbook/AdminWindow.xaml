@@ -48,6 +48,15 @@
                         <Button x:Name="skjulBtn" Content="Skjul" Click="skjulBtn_Click"/>
                         <Button x:Name="sletBtn" Content="Slet" Margin="0,10,0,0" Click="removeGbEntry"/>
                         <Button x:Name="visBtn" Content="Vis" Margin="0,10,0,0" Click="visBtn_Click"/>
+                        
+                        <!-- Info om valgte gæstebog -->
+                        <StackPanel x:Name="stpGuestbookInfo" Orientation="Vertical" Margin="0,30,0,0">
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding DateCreated, StringFormat=dd/MM-yyyy}" Margin="0,10,0,0"/>
+                            <TextBlock Text="{Binding EntryList.Count, StringFormat={}Antal beskeder:  {0}}"
+                                       Margin="0,5,0,0"/>
+                        </StackPanel>
+                        
                     </StackPanel>
 
                 </Grid>

@@ -31,6 +31,8 @@ namespace Digital_Guestbook
         private string name;
         // Guestbook file name
         private string fileName;
+        // Guestbook creation time
+        private DateTime dateCreated;
 
         // List of guestbook entries
         private List<Entry> _entryList;
@@ -56,6 +58,14 @@ namespace Digital_Guestbook
         public string FileName
         {
             get { return fileName; }
+        }
+
+        /// <summary>
+        /// Gets the date of creation.
+        /// </summary>
+        public DateTime DateCreated
+        {
+            get { return dateCreated; }
         }
 
         /// <summary>
@@ -99,14 +109,20 @@ namespace Digital_Guestbook
         /// <summary>
         /// Creates a new guestbook.
         /// </summary>
-        public Guestbook(string name, string fileName)
+        public Guestbook(string name, string fileName, DateTime dateCreated)
         {
             this.name = name;
             this.fileName = fileName;
+            this.dateCreated = dateCreated;
 
             _entryList = new List<Entry>();
 
             _currentPage = 0;
+        }
+
+        public Guestbook(GuestbookDescriptor descriptor)
+            : this(descriptor.Name, descriptor.FileName, descriptor.DateCreated)
+        {
         }
 
         #endregion

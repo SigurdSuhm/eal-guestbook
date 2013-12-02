@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -127,6 +128,13 @@ namespace Digital_Guestbook
         private void loadActiveGuestbook()
         {
             XmlDocument guestbookDocument = new XmlDocument();
+
+            if (!File.Exists("Guestbooks.xml"))
+            {
+                AdminWindow adminWindow = new AdminWindow(this);
+                adminWindow.ShowDialog();
+            }
+
             guestbookDocument.Load("Guestbooks.xml");
 
             foreach (XmlNode guestbookNode in guestbookDocument.DocumentElement.SelectNodes("Guestbook"))
@@ -134,7 +142,8 @@ namespace Digital_Guestbook
                 if (bool.Parse(guestbookNode["IsActive"].InnerText))
                 {
                     _currentGuestbook = new Guestbook(guestbookNode["Name"].InnerText,
-                        guestbookNode["FileName"].InnerText);
+                        guestbookNode["FileName"].InnerText,
+                        DateTime.Parse(guestbookNode["DateCreated"].InnerText));
 
                     _currentGuestbook.LoadGuestbookFile();
 
