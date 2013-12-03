@@ -55,12 +55,12 @@
 							<Border BorderThickness="1,0,0,0" BorderBrush="#FF909090" HorizontalAlignment="Left" Margin="0,5" />
 							<StackPanel Margin="5,5,0,5">
 								<Grid Margin="0,0,5,10">
-									<Label Content="&#8226;" Padding="5,0"/>
-									<TextBlock TextWrapping="Wrap" Text="Du skal huske at skrive dit navn!" Margin="15,0,0,0" Foreground="#FFE40000" />
+									<Label x:Name="lblNoNameDot" Content="&#8226;" Padding="5,0" Visibility="Hidden"/>
+                                    <TextBlock x:Name="txtblockNoNameText" TextWrapping="Wrap" Text="Du skal huske at skrive dit navn!" Margin="15,0,0,0" Foreground="#FFE40000" Visibility="Hidden"/>
 								</Grid>
 								<Grid Margin="0,0,5,10">
-									<Label Content="&#8226;" Padding="5,0"/>
-									<TextBlock TextWrapping="Wrap" Text="Beskeden kan ikke være tom, vær venlig at skrive en besked!" Margin="15,0,0,0" Foreground="#FFE40000"/>
+									<Label x:Name="lblNoTextDot" Content="&#8226;" Padding="5,0" Visibility="Hidden"/>
+									<TextBlock x:Name="txtblockNoTextText" TextWrapping="Wrap" Text="Beskeden kan ikke være tom, vær venlig at skrive en besked!" Margin="15,0,0,0" Foreground="#FFE40000" Visibility="Hidden"/>
 								</Grid>
 							</StackPanel>
 						</Grid>

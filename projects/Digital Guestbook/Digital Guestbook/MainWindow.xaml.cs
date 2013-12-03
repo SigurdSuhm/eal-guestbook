@@ -154,6 +154,41 @@ namespace Digital_Guestbook
             updateUi();
         }
 
+        private bool contentErrorCatcher()
+        {
+            bool result = true;
+
+            // Checks if the name textbox contains anything
+            if (!string.IsNullOrWhiteSpace(writeMessageNameTextBox.Text))
+            {
+                lblNoNameDot.Visibility = Visibility.Hidden;
+                txtblockNoNameText.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                lblNoNameDot.Visibility = Visibility.Visible;
+                txtblockNoNameText.Visibility = Visibility.Visible;
+
+                result = false;
+            }
+
+            // Check if the write message textbox contains anything
+            if (!(string.IsNullOrWhiteSpace(getStringFromRichTextBox(writeNewMessageTextBox)) || getStringFromRichTextBox(writeNewMessageTextBox).Equals("Din besked skrives her...\r\n")))
+            {
+                lblNoTextDot.Visibility = Visibility.Hidden;
+                txtblockNoTextText.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                lblNoTextDot.Visibility = Visibility.Visible;
+                txtblockNoTextText.Visibility = Visibility.Visible;
+
+                result = false;
+            }
+
+            return result;
+        }
+
         #endregion
 
         #region Events
@@ -163,16 +198,20 @@ namespace Digital_Guestbook
         /// </summary>
         private void sendMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            // Add entry to the guestbook
-            _currentGuestbook.AddEntry(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox).Trim(), writeMessageNameTextBox.Text, _selectedRating, DateTime.Now, true));
-            updateUi();
+            // Checks if the Name and Message textboxes' content are valid
+            if(contentErrorCatcher())
+            {
+                // Add entry to the guestbook
+                _currentGuestbook.AddEntry(new Entry(-1, getStringFromRichTextBox(writeNewMessageTextBox).Trim(), writeMessageNameTextBox.Text, _selectedRating, DateTime.Now, true));
+                updateUi();
 
-            // Save guestbook file
-            _currentGuestbook.SaveGuestbookFile();
+                // Save guestbook file
+                _currentGuestbook.SaveGuestbookFile();
 
-            MessageBox.Show("Din besked er blevet tilføjet.", "Besked tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Din besked er blevet tilføjet.", "Besked tilføjet", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            clearUi();
+                clearUi();
+            }
         }
 
         /// <summary>
